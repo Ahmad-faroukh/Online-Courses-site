@@ -66,23 +66,6 @@ class PermissionSeeder extends Seeder
             'Display_name' => 'Delete Courses'
         ]);
 
-        // ======= Topic Management ========
-        Permissions::create([
-            'name' => 'show-topics',
-            'Display_name' => 'View Topics'
-        ]);
-        Permissions::create([
-            'name' => 'add-topics',
-            'Display_name' => 'Add Topics'
-        ]);
-        Permissions::create([
-            'name' => 'edit-topics',
-            'Display_name' => 'Edit Topics'
-        ]);
-        Permissions::create([
-            'name' => 'delete-topics',
-            'Display_name' => 'Delete Topics'
-        ]);
 
         // ======= Category Management ========
         Permissions::create([

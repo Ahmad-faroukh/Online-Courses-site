@@ -21,5 +21,11 @@ class RoleSeeder extends Seeder
             'name' => 'user',
             'display_name' => 'User'
         ]);
+
+        Roles::create([
+            'name' => 'teacher',
+            'display_name' => 'Teacher'
+        ]);
+
     }
 }

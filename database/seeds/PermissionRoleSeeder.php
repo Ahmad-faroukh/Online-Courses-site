@@ -19,5 +19,11 @@ class PermissionRoleSeeder extends Seeder
         foreach ($permissions as $permission){
             $superAdmin->grantPermission($permission);
         }
+
+        $teacher = Roles::where('name','teacher')->firstOrfail();
+        $teacher->grantPermission('add-courses');
+        $teacher->grantPermission('edit-courses');
+        $teacher->grantPermission('delete-courses');
+
     }
 }
