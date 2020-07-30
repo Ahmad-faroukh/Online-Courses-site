@@ -41,7 +41,7 @@ class UsersController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
-            'phone' => ['required','numeric']
+            'phone' => ['nullable','numeric']
         ]);
 
 
@@ -55,7 +55,10 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->phone = $request->phone;
-        $user->bio = $request->bio;
+        if ($request->bio != null){
+            $user->bio = $request->bio;
+
+        }
 
         $user->save();
 
@@ -89,12 +92,14 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
-        $user->bio = $request->input('bio',false);
+        if ($request->bio != null){
+            $user->bio = $request->input('bio',false);
+        }
 
         $validator = Validator::make($request->all(),[
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id.',id'],
-            'phone' => ['required','numeric'],
+            'phone' => ['nullable','numeric'],
         ]);
 
 
@@ -113,16 +118,20 @@ class UsersController extends Controller
     public function export($course_id)
     {
         $course = Course::find($course_id);
-        $users =  $course->users()->pluck('id');
-
-        return Excel::download(new UsersExport($users), 'users.xlsx');
+        if ($course->user_id == auth()->user()->id || auth()->user()->roles()->pluck('name')->contains('super_admin')){
+            $users =  $course->users()->pluck('id');
+            return Excel::download(new UsersExport($users), 'users.xlsx');
+        }
+        return redirect()->route('pages.profile')->with('info','Access Denied');
     }
 
     public function removeFromCourse(Request $request , $courseID){
         $course = Course::find($courseID);
         $user = $request->userID;
-        $course->users()->detach($user);
-
-        return back()->with('success','User Removed From Course');
+        if ($course->user_id == auth()->user()->id || auth()->user()->roles()->pluck('name')->contains('super_admin')){
+            $course->users()->detach($user);
+            return back()->with('success','User Removed From Course');
+        }
+        return redirect()->route('pages.profile')->with('info','Access Denied');
     }
 }

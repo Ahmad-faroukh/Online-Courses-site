@@ -56,7 +56,7 @@
 
                             <div class="form-group">
                                 <label for="projectinput8">User Bio</label>
-                                <textarea id="projectinput8" rows="5" class="form-control" name="bio" placeholder="Bio">Hello There !!</textarea>
+                                <textarea id="projectinput8" rows="5" class="form-control" name="bio" placeholder="Hello There !"></textarea>
                             </div>
                         </div>
 

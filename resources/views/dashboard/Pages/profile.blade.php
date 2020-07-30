@@ -87,6 +87,71 @@
         </div>
     </div>
     </div>
+
+    @canany(['edit-courses','delete-courses'])
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" id="basic-layout-form-center" style="text-align: center;">Manage Courses</h4>
+                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <ul class="list-inline mb-0">
+                            <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                            <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                            <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                            <li><a data-action="close"><i class="icon-cross2"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block">
+                        <table class="table">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th>#</th>
+                                <th>Course</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @php
+                                $i = 1;
+                            @endphp
+
+                            @foreach($user->coursesCreated as $course)
+                                <tr>
+                                    <th scope="row">{{$i}}</th>
+                                    <td>
+                                        <a href="{{route('courses.show',$course->id)}}">{{$course->title}}</a>
+                                    </td>
+                                    <td>
+                                        <form class ="form" method="POST" action="{{route('courses.destroy',$course->id)}}">
+                                            @csrf
+                                            @method('delete')
+
+                                            @can('edit-courses')
+                                            <a href="{{route('courses.edit',$course->id)}}" class="btn btn-warning"><i class="icon-edit"></i> Edit</a>
+                                            @endcan
+
+                                            @can('delete-courses')
+                                            <button onclick="return confirm('Confirm Delete ?')" type="submit" class="btn btn-danger"> <i class="icon-delete"></i> Delete</button>
+                                            @endcanany
+
+                                        </form>
+                                    </td>
+                                </tr>
+                                @php
+                                    $i++;
+                                @endphp
+                                {{--                        <a href="{{asset('storage/files/'.$topic->file)}}" target="_blank">{{$topic->file}}</a>--}}
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcanany
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">

@@ -9,6 +9,8 @@
                     <div class="card-block">
                         <h4 class="card-title">{{$course->title}}</h4>
                         <p class="card-text">{{substr($course->description ,0,100)}} ...</p>
+                        <small class="card-title">Teacher : {{$course->user->name}}</small>
+                        <br>
                         <a href="{{route('pages.preview',$course->id)}}" class="btn btn-outline-secondary">Course Details</a>
                     </div>
                 </div>

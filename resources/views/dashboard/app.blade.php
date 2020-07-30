@@ -60,7 +60,7 @@
 
                     @auth
                     <li class="dropdown dropdown-user nav-item"><a href="#" data-toggle="dropdown" class="dropdown-toggle nav-link dropdown-user-link"><span class="avatar avatar-online"><img src="{{asset('storage/user_avatars/'.auth()->user()->avatar)}}" alt="avatar"><i></i></span><span class="user-name">{{Auth::user()->name}}</span></a>
-                        <div class="dropdown-menu dropdown-menu-right"><a href="{{route('pages.profile')}}" class="dropdown-item"><i class="icon-head"></i> My Profile</a><a href="{{route('pages.browse')}}" class="dropdown-item"><i class="icon-book"></i> Courses</a>
+                        <div class="dropdown-menu dropdown-menu-right"><a href="{{route('pages.profile',auth()->user()->id)}}" class="dropdown-item"><i class="icon-head"></i> My Profile</a><a href="{{route('pages.browse')}}" class="dropdown-item"><i class="icon-book"></i> Courses</a>
                             <div class="dropdown-divider"></div>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
@@ -131,15 +131,17 @@
             </li>
             @endcanany
 
-            <li class=" nav-item"><a href="{{route('pages.profile')}}"><i class="icon-users2"></i><span data-i18n="nav.dash.main" class="menu-item">My Profile</span></a>
+            <li class=" nav-item"><a href="{{route('pages.profile',auth()->user()->id)}}"><i class="icon-users2"></i><span data-i18n="nav.dash.main" class="menu-item">My Profile</span></a>
             </li>
 
 
             <li class=" nav-item"><a href="{{route('pages.browse')}}"><i class="icon-book"></i><span data-i18n="nav.dash.main" class="menu-title">Browse Courses</span></a>
             </li>
 
-            <li class=" nav-item"><a href="{{route('courses.create')}}"><i class="icon-book"></i><span data-i18n="nav.dash.main" class="menu-title">Create Courses</span></a>
+            @can('add-courses')
+            <li class=" nav-item"><a href="{{route('courses.create')}}"><i class="icon-plus"></i><span data-i18n="nav.dash.main" class="menu-title">Create Course</span></a>
             </li>
+            @endcan
 
         </ul>
     </div>

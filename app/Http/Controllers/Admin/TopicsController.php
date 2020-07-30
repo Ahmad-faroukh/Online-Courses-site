@@ -69,7 +69,7 @@ class TopicsController extends Controller
 
             return redirect()->route('courses.show',$course_id)->with('success','Topic Created');
         }
-        return redirect()->route('pages.profile')->with('info','Access Denied');
+        return redirect()->route('pages.profile',auth()->user()->id)->with('info','Access Denied');
 
     }
 
@@ -91,7 +91,7 @@ class TopicsController extends Controller
 
             return back()->with('success','Topic Deleted');
         }
-        return redirect()->route('pages.profile')->with('info','Access Denied');
+        return redirect()->route('pages.profile',auth()->user()->id)->with('info','Access Denied');
 
     }
 
@@ -101,7 +101,7 @@ class TopicsController extends Controller
             return view('dashboard.topics.edit',['topic' => $topic]);
 
         }
-        return redirect()->route('pages.profile')->with('info','Access Denied');
+        return redirect()->route('pages.profile',auth()->user()->id)->with('info','Access Denied');
 
     }
 
@@ -149,7 +149,7 @@ class TopicsController extends Controller
             return redirect()->route('courses.show',$topic->course_id)->with('success','Topic Updated');
         }
 
-        return redirect()->route('pages.profile')->with('info','Access Denied');
+        return redirect()->route('pages.profile',auth()->user()->id)->with('info','Access Denied');
 
     }
 

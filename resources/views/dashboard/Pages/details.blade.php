@@ -15,11 +15,20 @@
                     <div class="col-lg-7 col-xs-12">
                         <h3 class="my-1">{{$course->price}} $</h3>
                         <p class="lead">Duration : {{$course->duration}} Weeks</p>
+                        <p class="lead">Teacher : {{$course->user->name}}</p>
                         <p>{{$course->description}}</p>
-                        <form method="POST" action="{{route('pages.enroll',$course->id)}}">
-                            @csrf
-                            <button type="submit" class="btn btn-primary">Enroll Now !</button>
-                        </form>
+
+                        @if($course->users()->pluck('id')->contains(auth()->user()->id))
+                            <form method="GET" action="{{route('courses.show',$course->id)}}">
+                                @csrf
+                                <button type="submit" class="btn btn-success">View Course</button>
+                            </form>
+                        @else
+                            <form method="POST" action="{{route('pages.enroll',$course->id)}}">
+                                @csrf
+                                <button type="submit" class="btn btn-primary">Enroll Now !</button>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>

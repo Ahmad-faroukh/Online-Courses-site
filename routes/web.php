@@ -65,17 +65,18 @@ Route::put('/topics/update/{id}','Admin\TopicsController@update')->name('topics.
 Route::delete('/topics/removeFile/{file}','Admin\TopicsController@removeFile')->name('topics.removeFile');
 
 //============ End User Pages ============
-Route::get('courses/browse', 'PagesController@browse')->name('pages.browse');
-Route::get('profile', 'PagesController@profile')->name('pages.profile');
-Route::post('profile/update{id}', 'PagesController@update')->name('pages.update');
-Route::get('courses/preview/{id}', 'PagesController@preview')->name('pages.preview');
-Route::post('courses/enroll/{id}', 'PagesController@enroll')->name('pages.enroll');
+Route::get('/courses/browse', 'PagesController@browse')->name('pages.browse');
+Route::get('/profile/{id}', 'PagesController@profile')->name('pages.profile');
+Route::post('/profile/update{id}', 'PagesController@update')->name('pages.update');
+Route::get('/courses/preview/{id}', 'PagesController@preview')->name('pages.preview');
+Route::post('/courses/enroll/{id}', 'PagesController@enroll')->name('pages.enroll');
+Route::get('/home','PagesController@home');
 
 
 
 // export users that are enrolled in a specific course
-Route::get('users/export/{course_id}', 'Admin\UsersController@export')->name('students.export');
-Route::get('users/suspend/{course_id}', 'Admin\UsersController@removeFromCourse')->name('students.suspend');
+Route::get('/users/export/{course_id}', 'Admin\UsersController@export')->name('students.export');
+Route::get('/users/suspend/{course_id}', 'Admin\UsersController@removeFromCourse')->name('students.suspend');
 
 
 Auth::routes();

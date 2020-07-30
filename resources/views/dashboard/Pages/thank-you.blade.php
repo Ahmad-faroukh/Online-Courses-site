@@ -6,7 +6,7 @@
         <hr>
         <p>Click The Button Below To Visit Your Profile</p>
         <p class="lead">
-            <a class="btn btn-primary btn-sm" href="{{route('pages.profile')}}" role="button">Preview Profile</a>
+            <a class="btn btn-primary btn-sm" href="{{route('pages.profile',auth()->user()->id)}}" role="button">Preview Profile</a>
         </p>
     </div>
 @endsection

@@ -38,7 +38,12 @@ class PagesController extends Controller
         return view('dashboard.pages.thank-you');
     }
 
-    public function profile(){
+    public function profile($id){
+        $user = User::find($id);
+        return view('dashboard.pages.profile',['user'=>$user]);
+    }
+
+    public function home(){
         $user = auth()->user();
         return view('dashboard.pages.profile',['user'=>$user]);
     }
@@ -49,9 +54,9 @@ class PagesController extends Controller
 
         $validator = Validator::make($request->all(),[
             'name' => ['required', 'string', 'max:255'],
-            'phone' => ['numeric'],
-            'major' => ['string'],
-            'country' => ['string'],
+            'phone' => ['nullable','numeric'],
+            'major' => ['nullable','string'],
+            'country' => ['nullable','string'],
             'avatar' => ['image','max:1999','nullable'],
         ]);
 
@@ -87,7 +92,7 @@ class PagesController extends Controller
 
         $user->save();
 
-        return redirect()->route('pages.profile')->with('success','Profile Updated');
+        return redirect()->route('pages.profile',auth()->user()->id)->with('success','Profile Updated');
 
     }
 
