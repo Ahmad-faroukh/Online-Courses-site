@@ -122,7 +122,7 @@ class UsersController extends Controller
             $users =  $course->users()->pluck('id');
             return Excel::download(new UsersExport($users), 'users.xlsx');
         }
-        return redirect()->route('pages.profile')->with('info','Access Denied');
+        return abort('403','Unauthorized Access');
     }
 
     public function removeFromCourse(Request $request , $courseID){
@@ -132,6 +132,6 @@ class UsersController extends Controller
             $course->users()->detach($user);
             return back()->with('success','User Removed From Course');
         }
-        return redirect()->route('pages.profile')->with('info','Access Denied');
+        return abort('403','Unauthorized Access');
     }
 }

@@ -23,7 +23,7 @@ class TopicsController extends Controller
         if ($course->user_id == auth()->user()->id || auth()->user()->roles()->pluck('name')->contains('super_admin')){
             return view('dashboard.topics.create',['course_id'=>$course_id]);
         }
-        return redirect()->route('pages.profile')->with('info','Access Denied');
+        return abort('403','Unauthorized Access');
     }
 
     public function store(Request $request , $course_id){
@@ -69,8 +69,7 @@ class TopicsController extends Controller
 
             return redirect()->route('courses.show',$course_id)->with('success','Topic Created');
         }
-        return redirect()->route('pages.profile',auth()->user()->id)->with('info','Access Denied');
-
+        return abort('403','Unauthorized Access');
     }
 
     public function download($fileID){
@@ -91,8 +90,7 @@ class TopicsController extends Controller
 
             return back()->with('success','Topic Deleted');
         }
-        return redirect()->route('pages.profile',auth()->user()->id)->with('info','Access Denied');
-
+        return abort('403','Unauthorized Access');
     }
 
     public function edit($id){
@@ -101,8 +99,7 @@ class TopicsController extends Controller
             return view('dashboard.topics.edit',['topic' => $topic]);
 
         }
-        return redirect()->route('pages.profile',auth()->user()->id)->with('info','Access Denied');
-
+        return abort('403','Unauthorized Access');
     }
 
     public function update(Request $request , $id){
@@ -149,8 +146,7 @@ class TopicsController extends Controller
             return redirect()->route('courses.show',$topic->course_id)->with('success','Topic Updated');
         }
 
-        return redirect()->route('pages.profile',auth()->user()->id)->with('info','Access Denied');
-
+        return abort('403','Unauthorized Access');
     }
 
     public function removeFile($file){

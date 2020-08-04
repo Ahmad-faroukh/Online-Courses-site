@@ -136,8 +136,7 @@ class CoursesController extends Controller
         if ($course->user_id == auth()->user()->id || auth()->user()->roles()->pluck('name')->contains('super_admin')){
             return view('dashboard.courses.edit',['course' => $course,'categories' => $categories]);
         }
-
-        return redirect()->route('pages.profile')->with('info','Access Denied');
+        return abort('403','Unauthorized Access');
     }
 
     /**
@@ -198,7 +197,7 @@ class CoursesController extends Controller
 
         }
 
-        return redirect()->route('pages.profile',auth()->user()->id)->with('info','Access Denied');
+        return abort('403','Unauthorized Access');
     }
 
     /**
@@ -215,6 +214,6 @@ class CoursesController extends Controller
             return back()->with('success','Course Deleted');
         }
 
-        return redirect()->route('pages.profile',auth()->user()->id)->with('info','Access Denied');
+        return abort('403','Unauthorized Access');
     }
 }
