@@ -56,7 +56,7 @@ Route::delete('/courses/destroy{id}','Admin\CoursesController@destroy')->name('c
 
 
 //============ Topics ============
-Route::get('{course_id}/topic/create','Admin\TopicsController@create')->name('topics.create');
+Route::get('{course_id}/topics/create','Admin\TopicsController@create')->name('topics.create');
 Route::post('{course_id}/topics/store','Admin\TopicsController@store')->name('topics.store');
 Route::get('/topics/download/{file}','Admin\TopicsController@download')->name('topics.download');
 Route::delete('/topics/destroy{id}','Admin\TopicsController@destroy')->name('topics.destroy');
