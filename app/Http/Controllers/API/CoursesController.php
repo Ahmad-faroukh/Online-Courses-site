@@ -6,11 +6,15 @@ use App\Course;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 class CoursesController extends Controller
 {
     public function index(){
+
+        Gate::authorize('show-courses');
+
         $courses = Course::all();
         $count = count($courses);
         return response()->json([
@@ -21,6 +25,9 @@ class CoursesController extends Controller
     }
 
     public function show($id){
+
+        Gate::authorize('show-courses');
+
         $course = Course::find($id);
 
         if (is_null($course)){
@@ -36,6 +43,9 @@ class CoursesController extends Controller
     }
 
     public function store(Request $request){
+
+        Gate::authorize('add-courses');
+
 
         $validator = Validator::make($request->all(),[
             'title' => 'required|string|max:100',
@@ -54,13 +64,16 @@ class CoursesController extends Controller
         $course->description = $request->input('description');
         $course->duration = $request->duration;
         $course->price = $request->price;
-        $course->user_id =1;
+        $course->user_id =$request->user()->id;
         $course->save();
 
         return response()->json('course created' , 201);
     }
 
     public function update(Request $request , $id){
+
+        Gate::authorize('edit-courses');
+
         $validator = Validator::make($request->all(),[
             'title' => 'required|string|max:100',
             'description' => 'required|string',
@@ -78,13 +91,15 @@ class CoursesController extends Controller
         $course->description = $request->input('description');
         $course->duration = $request->duration;
         $course->price = $request->price;
-        $course->user_id =1;
         $course->save();
 
         return response()->json('course updated' , 200);
     }
 
     public function destroy($id){
+
+        Gate::authorize('delete-courses');
+
         $course = Course::find($id);
         if (is_null($course)){
             return response()->json('user not found',404);

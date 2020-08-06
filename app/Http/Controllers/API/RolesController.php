@@ -5,11 +5,15 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Roles;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 class RolesController extends Controller
 {
     public function index(){
+
+        Gate::authorize('show-roles');
+
         $roles = Roles::all();
         $count = count($roles);
         return response()->json([
@@ -20,6 +24,9 @@ class RolesController extends Controller
     }
 
     public function show($id){
+
+        Gate::authorize('show-roles');
+
         $role = Roles::find($id);
 
         if (is_null($role)){
@@ -35,6 +42,9 @@ class RolesController extends Controller
     }
 
     public function store(Request $request){
+
+        Gate::authorize('add-roles');
+
 
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|unique:roles',
@@ -57,6 +67,9 @@ class RolesController extends Controller
     }
 
     public function update(Request $request , $id){
+
+        Gate::authorize('edit-roles');
+
         $role = Roles::find($id);
 
         $validator = Validator::make($request->all(),[
@@ -80,6 +93,9 @@ class RolesController extends Controller
     }
 
     public function destroy($id){
+
+        Gate::authorize('delete-roles');
+
         $role = Roles::find($id);
         if (is_null($role)){
             return response()->json('record not found',404);

@@ -5,11 +5,14 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
     public function index(){
+
+        Gate::authorize('show-users');
         $users = User::all();
         $count = count($users);
         return response([
@@ -20,6 +23,9 @@ class UsersController extends Controller
     }
 
     public function show($id){
+
+        Gate::authorize('show-users');
+
         $user = User::find($id);
 
         if (is_null($user)){
@@ -30,6 +36,9 @@ class UsersController extends Controller
     }
 
     public function store(Request $request){
+
+        Gate::authorize('add-users');
+
         $validator = Validator::make($request->all(),[
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -53,6 +62,9 @@ class UsersController extends Controller
     }
 
     public function update(Request $request , $id){
+
+        Gate::authorize('edit-users');
+
 
         $user = User::find($id);
 
@@ -87,6 +99,9 @@ class UsersController extends Controller
     }
 
     public function destroy($id){
+
+        Gate::authorize('delete-users');
+
         $user = User::find($id);
         if (is_null($user)){
             return response()->json('user not found',404);

@@ -5,11 +5,15 @@ namespace App\Http\Controllers\API;
 use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 class CategoriesController extends Controller
 {
     public function index(){
+
+        Gate::authorize('show-categories');
+
         $categories = Category::all();
         $count = count($categories);
         return response()->json([
@@ -20,6 +24,9 @@ class CategoriesController extends Controller
     }
 
     public function show($id){
+
+        Gate::authorize('show-categories');
+
         $category = Category::find($id);
 
         if (is_null($category)){
@@ -33,6 +40,9 @@ class CategoriesController extends Controller
     }
 
     public function store(Request $request){
+
+        Gate::authorize('add-categories');
+
 
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:100'
@@ -51,6 +61,9 @@ class CategoriesController extends Controller
     }
 
     public function update(Request $request , $id){
+
+        Gate::authorize('edit-categories');
+
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:100'
         ]);
@@ -68,6 +81,9 @@ class CategoriesController extends Controller
     }
 
     public function destroy($id){
+
+        Gate::authorize('delete-categories');
+
         $category = Course::find($id);
         if (is_null($category)){
             return response()->json('record not found',404);

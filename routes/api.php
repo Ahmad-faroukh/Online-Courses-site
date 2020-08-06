@@ -18,7 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('users','API\UsersController');
-Route::apiResource('courses','API\CoursesController');
-Route::apiResource('categories','API\CategoriesController');
-Route::apiResource('roles','API\RolesController');
+Route::post('login','API\AuthController@login');
+Route::apiResource('users','API\UsersController')->middleware('auth:api');
+Route::apiResource('courses','API\CoursesController')->middleware('auth:api');;
+Route::apiResource('categories','API\CategoriesController')->middleware('auth:api');;
+Route::apiResource('roles','API\RolesController')->middleware('auth:api');;

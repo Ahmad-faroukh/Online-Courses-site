@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -33,7 +34,7 @@ class User extends Authenticatable
         return $this->roles->map->permissions->flatten()->pluck('name')->unique();
     }
 
-    use Notifiable;
+    use Notifiable,HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
